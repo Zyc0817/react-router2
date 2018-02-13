@@ -1,52 +1,48 @@
 import React from 'react'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
-import Header from '../../components/Header'
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
+import { hashHistory } from 'react-router'
+
+import Header from '../../components/Header'
 import UserInfo from '../../components/UserInfo'
 import OrderList from './subpage/OrderList'
-import { withRouter } from 'react-router-dom'
 
 class User extends React.Component {
     constructor(props, context) {
         super(props, context);
-        this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate
-        this.state = {
-            initDone: false
-        }
+        this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
     }
     render() {
         const userinfo = this.props.userinfo
         return (
             <div>
-                <Header title="个人中心" backRoute="/" history={this.props.history}/>
+                <Header title="用户主页" backRouter="/home"/>
                 <UserInfo username={userinfo.username} city={userinfo.cityName}/>
                 <OrderList username={userinfo.username}/>
             </div>
         )
     }
     componentDidMount() {
-        if(!this.props.userinfo.username) {
-            this.props.history.push('/Login')
+        // 如果未登录，跳转到登录页面
+        if (!this.props.userinfo.username) {
+            hashHistory.push('/Login')
         }
     }
 }
-function mapStateToProps(state) {
 
+// -------------------redux react 绑定--------------------
+
+function mapStateToProps(state) {
     return {
-        userinfo: state.userinfo,
-        store: state.store
+        userinfo: state.userinfo
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        
     }
 }
-
-
-export default withRouter(connect(
+export default connect(
     mapStateToProps,
-    mapDispatchToProps 
-)(User))
+    mapDispatchToProps
+)(User)

@@ -15,46 +15,30 @@ module.exports = {
     },
 
     resolve:{
-        extensions:['.js','.jsx']
+        extensions:['', '.js','.jsx']
     },
 
     module: {
-        rules: [
-            {
-                test: /\.jsx?$/, // test 去判断是否为.js或.jsx,是的话就是进行es6和jsx的编译
-                exclude: /(node_modules|bower_components)/,
-                loader: 'babel-loader',
-                query: {
-                    presets: ['es2015', 'react']
-                }
-            },
-            {
-                test: /\.(less|css)?$/,
-                exclude: /(node_modules|bower_components)/,
-                use: [
-                    'style-loader',
-                    { 
-                        loader: 'css-loader', 
-                        options: { 
-                            importLoaders: 1 
-                        } 
-                    },
-                    'postcss-loader',
-                    'less-loader'
-                ]
-            },
-            {
-                test: /\.(jpg|jpeg|gif|bmp|png|webp)?$/i,
-                exclude: /(node_modules|bower_components)/,
-                loader: 'file-loader'
-            },
-            {
-                test: /\.(woff|woff2|svg|ttf|eot)?$/i,
-                exclude: /(node_modules|bower_components)/,
-                loader: 'file-loader'
-            }
+        // preLoaders: [
+        //     // 报错 ？？？？？
+        //     {test: /\.(js|jsx)$/, loader: "eslint-loader", exclude: /node_modules/}
+        // ],
+        loaders: [
+            { test: /\.(js|jsx)$/, exclude: /node_modules/, loader: 'babel' },
+            { test: /\.less$/, exclude: /node_modules/, loader: 'style!css!postcss!less' },
+            { test: /\.css$/, exclude: /node_modules/, loader: 'style!css!postcss' },
+            { test:/\.(png|gif|jpg|jpeg|bmp)$/i, loader:'url-loader?limit=5000' },  // 限制大小5kb
+            { test:/\.(png|woff|woff2|svg|ttf|eot)($|\?)/i, loader:'url-loader?limit=5000'} // 限制大小小于5k
         ]
     },
+
+    eslint: {
+        configFile: '.eslintrc' // Rules for eslint
+    },
+
+    postcss: [
+        require('autoprefixer') //调用autoprefixer插件，例如 display: flex
+    ],
 
     plugins: [
         // html 模板插件
@@ -86,6 +70,7 @@ module.exports = {
           }
         },
         contentBase: "./public", //本地服务器所加载的页面所在的目录
+        colors: true, //终端中输出结果为彩色
         historyApiFallback: true, //不跳转
         inline: true, //实时刷新
         hot: true  // 使用热加载插件 HotModuleReplacementPlugin

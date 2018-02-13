@@ -5,7 +5,6 @@ import { connect } from 'react-redux'
 import LocalStore from '../util/localStore'
 import { CITYNAME } from '../config/localStoreKey'
 import * as userInfoActionsFromOtherFile from '../actions/userinfo' 
-import { withRouter } from 'react-router-dom'
 
 class App extends React.Component {
     constructor(props, context) {
@@ -32,8 +31,6 @@ class App extends React.Component {
         if (cityName == null) {
             cityName = '北京'
         }
-
-        // 将城市信息存储到redux中
         this.props.userInfoActions.update({
             cityName: cityName
         })
@@ -49,18 +46,15 @@ class App extends React.Component {
 
 function mapStateToProps(state) {
     return {
-
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        userInfoActions: bindActionCreators(userInfoActionsFromOtherFile, dispatch)
+        userInfoActions: bindActionCreators(userInfoActionsFromOtherFile, dispatch),
     }
 }
-
-
-export default withRouter(connect(
+export default connect(
     mapStateToProps,
-    mapDispatchToProps 
-)(App))
+    mapDispatchToProps
+)(App)

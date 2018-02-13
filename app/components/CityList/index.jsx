@@ -1,12 +1,12 @@
 import React from 'react'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
+
 import './style.less'
 
 class CityList extends React.Component {
     constructor(props, context) {
         super(props, context);
-        this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate
-        
+        this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
     }
     render() {
         return (
@@ -53,9 +53,9 @@ class CityList extends React.Component {
             </div>
         )
     }
-    clickHandle(newCity) {
+    clickHandle(cityName) {
         const changeFn = this.props.changeFn
-        changeFn(newCity)
+        changeFn(cityName)
     }
 }
 

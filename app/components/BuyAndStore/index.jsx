@@ -1,12 +1,12 @@
 import React from 'react'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
+
 import './style.less'
 
 class BuyAndStore extends React.Component {
     constructor(props, context) {
         super(props, context);
-        this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate
-        
+        this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
     }
     render() {
         return (
@@ -25,12 +25,12 @@ class BuyAndStore extends React.Component {
             </div>
         )
     }
-    storeClickHandle() {
-        this.props.storeHandle()
-    }
     buyClickHandle() {
         const buyHandle = this.props.buyHandle
         buyHandle()
+    }
+    storeClickHandle() {
+        const storeHandle = this.props.storeHandle()
     }
 }
 

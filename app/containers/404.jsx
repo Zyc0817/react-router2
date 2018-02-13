@@ -4,14 +4,11 @@ import PureRenderMixin from 'react-addons-pure-render-mixin'
 class NotFound extends React.Component {
     constructor(props, context) {
         super(props, context);
-        this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate
-        
+        this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
     }
     render() {
         return (
-            <div>
-                <h1>404</h1>
-            </div>
+            <h1>404 not found page</h1>
         )
     }
 }

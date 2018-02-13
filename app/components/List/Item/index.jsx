@@ -1,15 +1,13 @@
 import React from 'react'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
-import './style.less'
-import { Link } from 'react-router-dom' 
-let img1 = require('../../../static/img/138012-20161016201652952-1050532278.png')
-let arr = [img1]
+import { Link } from 'react-router'
 
-class Item extends React.Component {
+import './style.less'
+
+class ListItem extends React.Component {
     constructor(props, context) {
         super(props, context);
-        this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate
-        
+        this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
     }
     render() {
         const data = this.props.data
@@ -17,7 +15,7 @@ class Item extends React.Component {
             <div className="list-item clear-fix">
                 <Link to={'/detail/' + data.id}>
                     <div className="item-img-container float-left">
-                        <img src={arr[0]} alt={data.title}/>
+                        <img src={data.img} alt={data.title}/>
                     </div>
                     <div className="item-content">
                         <div className="item-title-container clear-fix">
@@ -38,4 +36,4 @@ class Item extends React.Component {
     }
 }
 
-export default Item
+export default ListItem

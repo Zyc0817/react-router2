@@ -1,14 +1,15 @@
 import React from 'react'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
-import './style.less'
-import { Link } from 'react-router-dom'
+import { Link, hashHistory } from 'react-router'
+
 import SearchInput from '../SearchInput'
+
+import './style.less'
 
 class HomeHeader extends React.Component {
     constructor(props, context) {
         super(props, context);
-        this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate
-        
+        this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
     }
     render() {
         return (
@@ -17,8 +18,8 @@ class HomeHeader extends React.Component {
                     <Link to="/city">
                         <span>{this.props.cityName}</span>
                         &nbsp;
-                        <i className="icon-angle-down"></i> 
-                    </Link>       
+                        <i className="icon-angle-down"></i>
+                    </Link>
                 </div>
                 <div className="home-header-right float-right">
                     <Link to="/Login">
@@ -28,16 +29,15 @@ class HomeHeader extends React.Component {
                 <div className="home-header-middle">
                     <div className="search-container">
                         <i className="icon-search"></i>
-                        <SearchInput value=''  enterHandle={this.enterHandle.bind(this)}/>
-                    </div> 
+                        &nbsp;
+                        <SearchInput value="" enterHandle={this.enterHandle.bind(this)}/>
+                    </div>
                 </div>
-                
             </div>
         )
     }
     enterHandle(value) {
-        this.props.history.push('/search/all/' + encodeURIComponent(value))
-
+        hashHistory.push('/search/all/' + encodeURIComponent(value))
     }
 }
 

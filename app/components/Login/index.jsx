@@ -1,13 +1,14 @@
 import React from 'react'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
+
 import './style.less'
 
 class Login extends React.Component {
     constructor(props, context) {
         super(props, context);
-        this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate
+        this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
         this.state = {
-            phone: ''
+            username: ''
         }
     }
     render() {
@@ -33,13 +34,13 @@ class Login extends React.Component {
     }
     changeHandle(e) {
         this.setState({
-            phone: e.target.value
+            username: e.target.value
         })
     }
     clickHandle() {
-        const username = this.state.phone
-        const LoginHandle = this.props.loginHandle
-        LoginHandle(username)
+        const username = this.state.username
+        const loginHandle = this.props.loginHandle
+        loginHandle(username);
     }
 }
 

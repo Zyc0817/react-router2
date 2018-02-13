@@ -1,32 +1,31 @@
 import React from 'react'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
-import HomeHeader from '../../components/HomeHeader'
+import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import HomeHeader from '../../components/HomeHeader'
 import Category from '../../components/Category'
 import Ad from './subpage/Ad'
 import List from './subpage/List'
-import { withRouter } from 'react-router-dom'
 
 class Home extends React.Component {
     constructor(props, context) {
         super(props, context);
-        this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate
-        this.state = {
-            initDone: false
-        }
+        this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
     }
     render() {
         return (
             <div>
-                <HomeHeader cityName={this.props.userinfo.cityName} history={this.props.history}/>
+                <HomeHeader cityName={this.props.userinfo.cityName}/>
                 <Category/>
-                <div style={{height:'15px'}}></div>
+                <div style={{height: '15px'}}>{/* 分割线 */}</div>
                 <Ad/>
                 <List cityName={this.props.userinfo.cityName}/>
             </div>
         )
     }
 }
+
+// -------------------redux react 绑定--------------------
 
 function mapStateToProps(state) {
     return {
@@ -36,12 +35,9 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-    
     }
 }
-
-
-export default withRouter(connect(
+export default connect(
     mapStateToProps,
-    mapDispatchToProps 
-)(Home))
+    mapDispatchToProps
+)(Home)

@@ -1,13 +1,13 @@
 import React from 'react'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
-import './style.less'
+import { hashHistory } from 'react-router'
 
+import './style.less'
 
 class Header extends React.Component {
     constructor(props, context) {
         super(props, context);
-        this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate
-        
+        this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
     }
     render() {
         return (
@@ -20,13 +20,12 @@ class Header extends React.Component {
         )
     }
     clickHandle() {
-        const backRoute = this.props.backRoute
-        if(backRoute) {
-            this.props.history.push(backRoute)
+        const backRouter = this.props.backRouter
+        if (backRouter) {
+            hashHistory.push(hashHistory)
         } else {
             window.history.back()
         }
-        
     }
 }
 
